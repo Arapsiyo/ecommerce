@@ -11,10 +11,15 @@ datasource db {
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
-  username      String @unique
-  email         String @unique
-  password      String
-  
+  id                              Int     @id @default(autoincrement())
+  username                        String @unique
+  email                           String @unique
+  password                        String
+  isAdmin                         Boolean   @default(false)
+  forgotPasswordToken             String?
+  forgotPasswordTokenExpiry       DateTime?
+  verifyToken                     String?
+  verifyTokenExpiry               DateTime?
+
 
 }
