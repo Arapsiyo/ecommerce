@@ -21,10 +21,10 @@ export default function ProfilePage() {
 
   const getUserDetails = async () => {
     const res = await axios.get('/api/users/me');
-    console.log(res.data);
 
-    setData(res.data.data._id);
-    console.log('data usestate, ', data);
+    // const { user } = data;
+    console.log(res.data);
+    setData(res.data.data.username);
   };
 
   return (
