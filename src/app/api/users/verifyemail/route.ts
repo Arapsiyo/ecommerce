@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
+import bcryptjs from 'bcryptjs';
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -20,8 +21,6 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
     }
     console.log(user);
-    // user.isVerified = true;
-    // user.verifyTokenExpiry = undefined;
 
     const { id } = user;
 
