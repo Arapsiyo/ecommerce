@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import bcryptjs from 'bcryptjs';
-import { prisma } from '@/app/lib/prisma';
+import { prisma } from '@/lib/prisma';
+import { sendEmail } from '@/helpers/mailer';
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -31,6 +32,11 @@ export const POST = async (req: NextRequest) => {
         password: hashedPassword,
       },
     });
+
+    // send verification email
+
+    await sendEmail({ email, emailType: 'VERIFY', userId: savedUser.id });
+
     return NextResponse.json({
       message: 'User created successfully',
       success: true,
