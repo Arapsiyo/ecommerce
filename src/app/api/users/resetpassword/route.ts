@@ -25,7 +25,12 @@ export const POST = async (req: NextRequest) => {
     console.log('user ... ', user);
 
     if (!user) {
-      return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
+      console.log('user is null: ', user);
+
+      return NextResponse.json(
+        { error: 'Invalid crudentials' },
+        { status: 400 }
+      );
     }
 
     await prisma.user.update({
@@ -34,12 +39,14 @@ export const POST = async (req: NextRequest) => {
       },
       data: {
         password: hashedPassword,
+        forgotPasswordToken: '',
+        forgotPasswordTokenExpiry: null,
       },
     });
 
     const updatedUser = await prisma.user.findFirst({
       where: {
-        forgotPasswordToken: forgetToken,
+        email: user.email,
       },
     });
 
@@ -53,3 +60,15 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };
+/*
+id: 12,
+  username: 'one5',
+  email: 'one5@gmail.com',
+  password: '$2a$10$5EKfGZ/OzhDuCMOd7YnISeY3CsXf7as7Si7tC7vP93bgVaDSBD/Cy',
+  isAdmin: false,
+  forgotPasswordToken: '',
+  forgotPasswordTokenExpiry: null,
+  verifyToken: '$2a$10$4UO9OV.JQEQlGCw2cpefLeOoDfxbetBjz1AsoOSr.X7D1nmtZO5BK',
+  verifyTokenExpiry: 2023-08-15T05:35:47.922Z,
+  isVerified: true
+*/

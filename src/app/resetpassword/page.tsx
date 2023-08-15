@@ -15,7 +15,7 @@ const ResetPasswordPage = () => {
     console.log('url token: ', urlToken);
 
     setForgetToken(urlToken);
-  }, [forgetToken]);
+  }, []);
 
   const handleClick = async (e: any) => {
     e.preventDefault();
@@ -30,12 +30,16 @@ const ResetPasswordPage = () => {
       console.log('user front : ', user);
 
       const response = await axios.post('/api/users/resetpassword', user);
-      console.log('Signup success', response.data);
+      //console.log('response: ', response);
+
+      //console.log('Signup success', response.data);
       router.push('/login');
+
       //router.push('/login');
     } catch (error: any) {
+      console.log('inside catch');
       setError(true);
-      console.log(error.reponse.data);
+      console.log(error.response.data);
     }
   };
   return (
@@ -45,7 +49,6 @@ const ResetPasswordPage = () => {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        onClick={handleClick}
       />
       <button onClick={handleClick}>Reset</button>
     </div>

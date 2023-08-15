@@ -20,6 +20,14 @@ export const POST = async (req: NextRequest) => {
     if (!user) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
     }
+    if (user.isVerified) {
+      console.log('inside user verified');
+
+      return NextResponse.json(
+        { error: 'User is already verified' },
+        { status: 400 }
+      );
+    }
     console.log(user);
 
     const { id } = user;

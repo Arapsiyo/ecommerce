@@ -7,6 +7,8 @@ export const POST = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
     const { email, password } = reqBody;
+    console.log('email', email);
+    console.log('password: ', password);
 
     // check if user exist
     const user = await prisma.user.findFirst({
@@ -44,6 +46,7 @@ export const POST = async (req: NextRequest) => {
     const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
       expiresIn: '1d',
     });
+    console.log('user in the login ', user);
 
     const response = NextResponse.json({
       message: 'Login successful',
