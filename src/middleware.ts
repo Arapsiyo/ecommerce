@@ -14,15 +14,14 @@ export const middleware = (req: NextRequest) => {
 
   const token = req.cookies.get('token')?.value || '';
 
-  // if (isPublicPath && token) {
-  //   return NextResponse.redirect(new URL('/', req.nextUrl));
-  // }
-  // if (!isPublicPath && !token) {
-  //   return NextResponse.redirect(new URL('/login', req.nextUrl));
-  // }
-  // if (isPublicPath && !token) {
-  //   return;
-  // }
+  if (isPublicPath && token) {
+    return NextResponse.redirect(new URL('/', req.nextUrl));
+  }
+  if (!isPublicPath && !token) {
+    console.log('here');
+
+    return NextResponse.redirect(new URL('/login', req.nextUrl));
+  }
 };
 export const config = {
   matcher: [
